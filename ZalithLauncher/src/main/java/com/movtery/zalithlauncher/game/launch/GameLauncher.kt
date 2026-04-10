@@ -264,7 +264,11 @@ class GameLauncher(
 
     private fun tryStartTouchProxy() {
         if (version.isTouchProxyEnabled()) {
-            ControllerProxy.startProxy(activity, version.getTouchVibrateDuration())
+            ControllerProxy.startProxy(
+                context = activity,
+                vibrateDuration = version.getTouchVibrateDuration(),
+                vibrateKind = version.getTouchVibrateKind(),
+            )
         }
     }
 
