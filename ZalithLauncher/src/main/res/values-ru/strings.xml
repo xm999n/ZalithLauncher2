@@ -1215,4 +1215,12 @@
     <string name="control_editor_layers_attribute_hide_when_gamepad"></string>
     <string name="control_editor_layers_attribute_hide_when_mouse"></string>
     <string name="control_editor_layers_attribute_hide_when_joystick"></string>
+    <string name="versions_export_tip_remote_2"></string>
+    <string name="versions_export_tip_3"></string>
+    <string name="versions_export_tip_4"></string>
+    <string name="versions_export_tip_5"></string>
+    <string name="version_summary_fools_herd_craft"></string>
+    <string name="versions_export_tip_1"></string>
+    <string name="versions_export_tip_remote_1"></string>
+    <string name="versions_export_tip_2"></string>
 </resources>
