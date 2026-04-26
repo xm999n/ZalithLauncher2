@@ -359,7 +359,7 @@
     <string name="settings_control_physical_key_bind_ime_bound">割り当てキー: %s</string>
     <string name="settings_control_physical_key_bind_ime_un_bind">未割り当て</string>
     <string name="settings_game_jvm_args_title">JVM引数</string>
-    <string name="settings_renderer_vsync_in_zink_title"> Zink垂直同期</string>
+    <string name="settings_renderer_vsync_in_zink_title">Zink垂直同期</string>
     <string name="settings_renderer_vsync_in_zink_summary">システムインターフェースを使用してZinkレンダラーの垂直同期を有効にします</string>
     <string name="settings_tab_info_about">情報</string>
     <string name="settings_renderer_global_renderer_title">グローバルレンダラー</string>
@@ -1137,4 +1137,8 @@
     <string name="page_title_select_files">パスの選択</string>
     <string name="unpack_screen_jre25">Java 25 環境 (Minecraft 26.1 以降に必要)</string>
     <string name="versions_install_loader">ローダーのインストール</string>
+    <string name="control_editor_layers_attribute_hide_when_joystick"></string>
+    <string name="account_label_server_url"></string>
+    <string name="control_editor_layers_attribute_hide_when_gamepad"></string>
+    <string name="control_editor_layers_attribute_hide_when_mouse"></string>
 </resources>
