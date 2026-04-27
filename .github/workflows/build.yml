@@ -28,6 +28,7 @@ jobs:
 
       - name: Generate Keystore
         run: |
+          rm -f ZalithLauncher/zalith_launcher.jks
           keytool -genkeypair \
             -alias movtery_zalith \
             -keyalg RSA \
@@ -37,7 +38,7 @@ jobs:
             -storepass android \
             -keypass android \
             -dname "CN=build, OU=build, O=build, L=build, S=build, C=US"
-
+      
       - name: Build Release APK
         run: |
           chmod +x gradlew
