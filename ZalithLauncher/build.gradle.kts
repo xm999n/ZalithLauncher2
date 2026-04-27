@@ -74,6 +74,7 @@ android {
         targetSdk = 35
         versionCode = launcherVersionCode
         versionName = launcherVersionName
+        resourceConfigurations += setOf("en", "zh-rCN")
         manifestPlaceholders["launcher_name"] = launcherAPPName
     }
 
