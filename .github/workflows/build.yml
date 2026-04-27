@@ -3,34 +3,11 @@ name: Build APK
 on:
   workflow_dispatch:
   workflow_call:
-    inputs:
-      variant:
-        required: true
-        type: string
-    secrets:
-      KEY_PASSWORD:
-        required: false
-      STORE_PASSWORD:
-        required: false
-      OAUTH_CLIENT_ID:
-        required: false
-      CURSEFORGE_API_KEY:
-        required: false
 
 jobs:
   build:
     if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        arch: ["all", "arm", "arm64", "x86", "x86_64"]
-      fail-fast: false
-
-    env:
-      KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
-      STORE_PASSWORD: ${{ secrets.STORE_PASSWORD }}
-      OAUTH_CLIENT_ID: ${{ secrets.OAUTH_CLIENT_ID }}
-      CURSEFORGE_API_KEY: ${{ secrets.CURSEFORGE_API_KEY }}
 
     steps:
       - name: Checkout
@@ -49,23 +26,30 @@ jobs:
         with:
           add-job-summary: "on-failure"
 
-      - name: Build APK for ${{ matrix.arch }}
+      - name: Generate Keystore
+        run: |
+          keytool -genkeypair \
+            -alias key0 \
+            -keyalg RSA \
+            -keysize 2048 \
+            -validity 9999 \
+            -keystore keystore.jks \
+            -storepass android \
+            -keypass android \
+            -dname "CN=build, OU=build, O=build, L=build, S=build, C=US"
+
+      - name: Build Release APK
         run: |
           chmod +x gradlew
-          ./gradlew ZalithLauncher:assemble${{ inputs.variant }} -Darch=${{ matrix.arch }}
+          ./gradlew ZalithLauncher:assembleRelease -Darch=arm64
+        env:
+          STORE_FILE: ${{ github.workspace }}/keystore.jks
+          STORE_PASSWORD: android
+          KEY_ALIAS: key0
+          KEY_PASSWORD: android
 
-      - name: Upload Release APK for ${{ matrix.arch }}
-        if: inputs.variant == 'Release'
-        continue-on-error: true
+      - name: Upload Release APK
         uses: actions/upload-artifact@v4
         with:
-          name: release apk (${{ matrix.arch }})
+          name: release apk (arm64)
           path: ZalithLauncher/build/outputs/apk/release/*.apk
-
-      - name: Upload Debug APK for ${{ matrix.arch }}
-        if: inputs.variant == 'Debug'
-        continue-on-error: true
-        uses: actions/upload-artifact@v4
-        with:
-          name: debug apk (${{ matrix.arch }})
-          path: ZalithLauncher/build/outputs/apk/debug/*.apk
