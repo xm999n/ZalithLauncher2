@@ -28,7 +28,7 @@ val defaultStorePassword = project.findProperty("default_store_password") as? St
 val defaultKeyPassword = project.findProperty("default_key_password") as? String ?: error("The \"default_key_password\" property is not set in gradle.properties.")
 val defaultCurseForgeApiKey = project.findProperty("curseforge_api_key") as? String
 
-val generatedZalithDir = file("$buildDir/generated/source/zalith/java")
+val generatedZalithDir = layout.buildDirectory.dir("generated/source/zalith/java").get().asFile
 
 fun getKeyFromLocal(envKey: String, fileName: String? = null, default: String? = null): String {
     val key = System.getenv(envKey)
@@ -74,14 +74,17 @@ android {
         targetSdk = 35
         versionCode = launcherVersionCode
         versionName = launcherVersionName
-        resourceConfigurations += setOf("en", "zh-rCN")
         manifestPlaceholders["launcher_name"] = launcherAPPName
+    }
+
+    androidResources {
+        localeFilters += setOf("en", "zh-rCN")
     }
 
     buildTypes {
         release {
-            isMinifyEnabled = false
-            isShrinkResources = false
+            isMinifyEnabled = true
+            isShrinkResources = true
             signingConfig = signingConfigs.getByName("releaseBuild")
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
